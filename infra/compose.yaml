@@ -1,0 +1,31 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: event
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-event_local}
+      POSTGRES_DB: event_management
+    ports:
+      - "127.0.0.1:55432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U event -d event_management"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+  api:
+    build: ../backend
+    environment:
+      DATABASE_URL: postgresql+asyncpg://event:${POSTGRES_PASSWORD:-event_local}@db:5432/event_management
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET before starting the API}
+      COOKIE_SECURE: "false"
+      ENVIRONMENT: development
+      CORS_ORIGINS: '["http://localhost:5173"]'
+    ports:
+      - "127.0.0.1:8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+volumes:
+  postgres_data:

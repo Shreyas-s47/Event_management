@@ -17,4 +17,4 @@ Event Management System planned for a six-member team working in parallel.
 
 ## Current status
 
-Planning stage. Application code and runnable setup have not been created yet.
+Member 4's initial Python backend is implemented on the feature branch. See [backend setup](backend/README.md) and [API contract](docs/contracts/MEMBER_4_API.md) for local run commands, current endpoints, and remaining scope. React frontend and Members 5/6 domain modules are pending.

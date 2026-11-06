@@ -9,6 +9,8 @@
 - One shared frontend and one modular backend. Each person owns feature folders, contracts, and validation for their work.
 - This file assigns work; it does not launch agents or implement application code. The overall architecture and scope remain in IMPLEMENTATION_PLAN.md.
 
+Current progress: Member 4's first backend slice is implemented. See [status and remaining work](docs/MEMBER_4_STATUS.md), [run guide](backend/README.md), and [API handoff](docs/contracts/MEMBER_4_API.md).
+
 ## Member assignments
 
 | Member | Primary ownership | Screens or backend modules | First independent deliverable |

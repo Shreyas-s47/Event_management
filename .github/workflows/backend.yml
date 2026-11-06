@@ -1,0 +1,42 @@
+name: Backend checks
+on:
+  push:
+    paths: ["backend/**", "infra/**", "docs/contracts/**", ".github/workflows/backend.yml"]
+  pull_request:
+    paths: ["backend/**", "infra/**", "docs/contracts/**", ".github/workflows/backend.yml"]
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: event
+          POSTGRES_PASSWORD: event_test
+          POSTGRES_DB: event_management
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U event -d event_management"
+          --health-interval 3s --health-timeout 3s --health-retries 20
+    defaults:
+      run:
+        working-directory: backend
+    env:
+      DATABASE_URL: postgresql+asyncpg://event:event_test@localhost:5432/event_management
+      JWT_SECRET: ci-only-secret-never-use-outside-testing-123456
+      ENVIRONMENT: test
+      COOKIE_SECURE: "false"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+        with:
+          version: "0.11.19"
+          python-version: "3.12"
+      - run: uv sync --frozen
+      - run: uv run ruff check .
+      - run: uv run ruff format --check .
+      - run: uv run alembic upgrade head
+      - run: uv run alembic check
+      - run: uv run pytest -q
+      - run: uv run python -m app.export_openapi
+      - run: git diff --exit-code -- ../docs/contracts/member4.openapi.json

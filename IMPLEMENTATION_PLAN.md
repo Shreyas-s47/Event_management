@@ -2,7 +2,7 @@
 
 ## Basis and scope
 
-Reviewed all 10 pages of `C:\Users\Shreyas\Downloads\nasscom project sys.pdf`. The workspace was empty at review time. The PDF is a reference architecture, not an implementation-ready specification. This plan preserves its four roles and functional scope while proposing explicit implementation decisions. No application code has been created.
+Reviewed all 10 pages of `C:\Users\Shreyas\Downloads\nasscom project sys.pdf`. The workspace was empty at initial review time. The PDF is a reference architecture, not an implementation-ready specification. This plan preserves its four roles and functional scope while proposing explicit implementation decisions. Member 4's first backend slice is now implemented; see [current status](docs/MEMBER_4_STATUS.md) and [backend setup](backend/README.md).
 
 Working assumption: six members (three frontend and three backend) first deliver a demonstrable single event-management organization's system. See [SIX_MEMBER_WORK_PLAN.md](SIX_MEMBER_WORK_PLAN.md) for parallel ownership and integration checkpoints. Confirm deadline, deployment budget, expected concurrent users, and whether multiple independent organizations must be supported before estimating calendar dates. Production readiness requires separate operational validation.
 
